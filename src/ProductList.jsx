@@ -310,10 +310,10 @@ const dispatch = useDispatch()
             <div className="product-title">{plant.name}</div>
             {/*Similarly like the above plant.name show other details like description and cost*/}
             <button
-              className="product-button"
+              className={`product-button ${addedToCart[plant.name]? 'added-to-cart':''}`}
               onClick={() => handleAddToCart(plant)}
             >
-              Add to Cart
+             {addedToCart[plant.name] ? 'Added to Cart':'Add to Cart'}
             </button>
           </div>
         ))}
