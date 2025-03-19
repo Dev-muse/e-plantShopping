@@ -47,6 +47,8 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+
 .product-list {
     display: flex;
     flex-wrap: wrap;
@@ -81,6 +83,10 @@ body {
     z-index: 1;
 }
 
+.category-title{
+    text-align: center;
+    margin: 15px 0;
+}
 .product-title {
     font-weight: bold;
     margin-bottom: 10px;
