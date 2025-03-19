@@ -298,6 +298,13 @@ function ProductList({ onHomeClick }) {
     e.preventDefault();
     setShowCart(false);
   };
+  const totalItemsInCart = () => {
+    let t = 0;
+    cart.forEach((c) => {
+        t += c.quantity;
+    });
+    return t;
+}
 
   const renderedProducts = plantsArray.map((category, index) => (
     <div key={index}>
@@ -379,6 +386,7 @@ function ProductList({ onHomeClick }) {
                     id="mainIconPathAttribute"
                   ></path>
                 </svg>
+                <span className='cart_quantity_count'>{totalItemsInCart()}</span> 
               </h1>
             </a>
           </div>
