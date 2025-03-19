@@ -53,7 +53,7 @@ npm run dev
 ```
 
 4. **Visit the Application**
-- Open [http://localhost:3000](http://localhost:5137) in your browser.
+- Open [http://localhost:5137](http://localhost:5137) in your browser.
 
 ## Deployment
 To deploy the application using GitHub Pages:
