@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./ProductList.css";
 import CartItem from "./CartItem";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { addItem } from "./CartSlice";
 function ProductList({ onHomeClick }) {
   const [showCart, setShowCart] = useState(false);
   const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
   const [addedToCart, setAddedToCart] = useState({});
-const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.items);
+  console.log(cart)
   const plantsArray = [
     {
       category: "Air Purifying Plants",
@@ -276,14 +277,13 @@ const dispatch = useDispatch()
     e.preventDefault();
     onHomeClick();
   };
-  const handleAddToCart  = (product)=>{
+  const handleAddToCart = (product) => {
     dispatch(addItem(product));
     setAddedToCart((prevState) => ({
-       ...prevState,
-       [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
-     }));
-
-  }
+      ...prevState,
+      [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
+    }));
+  };
   const handleCartClick = (e) => {
     e.preventDefault();
     setShowCart(true); // Set showCart to true when cart icon is clicked
@@ -301,8 +301,7 @@ const dispatch = useDispatch()
 
   const renderedProducts = plantsArray.map((category, index) => (
     <div key={index}>
-      <h1 className="category-title">{category.category}
-      </h1>
+      <h1 className="category-title">{category.category}</h1>
       <div className="product-list">
         {category.plants.map((plant, plantIndex) => (
           <div className="product-card" key={plantIndex}>
@@ -310,10 +309,19 @@ const dispatch = useDispatch()
             <div className="product-title">{plant.name}</div>
             {/*Similarly like the above plant.name show other details like description and cost*/}
             <button
-              className={`product-button ${addedToCart[plant.name]? 'added-to-cart':''}`}
+              className={`${
+                cart.some((item) => item.name == plant.name)
+                  ? "product-button added-to-cart"
+                  : "product-button"
+              }`}
+              disabled={cart.some((item) => item.name == plant.name)}
               onClick={() => handleAddToCart(plant)}
             >
-             {addedToCart[plant.name] ? 'Added to Cart':'Add to Cart'}
+              {`${
+                cart.some((item) => item.name == plant.name)
+                  ? "Added to cart"
+                  : "Add to cart"
+              }`}
             </button>
           </div>
         ))}
@@ -375,9 +383,7 @@ const dispatch = useDispatch()
         </div>
       </div>
       {!showCart ? (
-        <div className="product-grid">
-            {renderedProducts}
-        </div>
+        <div className="product-grid">{renderedProducts}</div>
       ) : (
         <CartItem onContinueShopping={handleContinueShopping} />
       )}
